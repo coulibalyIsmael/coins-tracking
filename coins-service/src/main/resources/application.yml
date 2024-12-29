@@ -18,7 +18,7 @@ app:
     coingecko:
       scheme: "https"
       url: "api.coingecko.com"
-      token: "CG-xMFsRRp2YAgww7NZrh5xshaU"
+      token: ""
 
 logging:
   level:
