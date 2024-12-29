@@ -1,0 +1,116 @@
+# Description: This file contains the liquibase changeset to create the coins table in the database.
+databaseChangeLog:
+  - changeSet:
+      id: create-table-coins
+      author: coolismo
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+            tableName: coins
+      changes:
+        - createTable:
+            tableName: coins
+            columns:
+              - name: id
+                type: BIGINT
+                autoIncrement: true
+                constraints:
+                  primaryKey: true
+                  nullable: false
+              - name: symbol
+                type: VARCHAR(20)
+                constraints:
+                  nullable: false
+              - name: name
+                type: VARCHAR(100)
+                constraints:
+                  nullable: false
+              - name: total_volume
+                type: NUMERIC(19)
+                constraints:
+                  nullable: true
+              - name: high_24h
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: low_24h
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: price_change_24h
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: price_change_percentage_24h
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: market_cap
+                type: NUMERIC(19)
+                constraints:
+                  nullable: true
+              - name: market_cap_change_24h
+                type: NUMERIC(19,4)
+                constraints:
+                  nullable: true
+              - name: market_cap_change_percentage_24h
+                type: NUMERIC(19,4)
+                constraints:
+                  nullable: true
+              - name: circulating_supply
+                type: NUMERIC(19)
+                constraints:
+                  nullable: true
+              - name: total_supply
+                type: NUMERIC(19)
+                constraints:
+                  nullable: true
+              - name: ath
+                type: NUMERIC(19)
+                constraints:
+                  nullable: true
+              - name: ath_change_percentage
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: ath_date
+                type: TIMESTAMP
+                constraints:
+                  nullable: true
+              - name: atl
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: atl_change_percentage
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: atl_date
+                type: TIMESTAMP
+                constraints:
+                  nullable: true
+              - name: last_updated
+                type: TIMESTAMP
+                constraints:
+                  nullable: true
+              - name: image
+                type: VARCHAR(255)
+                constraints:
+                  nullable: true
+              - name: market_cap_rank
+                type: INT
+                constraints:
+                  nullable: true
+              - name: fully_diluted_valuation
+                type: NUMERIC(20)
+                constraints:
+                  nullable: true
+              - name: roi
+                type: DECIMAL(19,4)
+                constraints:
+                  nullable: true
+              - name: max_supply
+                type: NUMERIC(19)
+                constraints:
+                  nullable: true

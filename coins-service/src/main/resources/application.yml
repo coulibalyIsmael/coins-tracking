@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: coins-service
+  liquibase:
+    enabled: true
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+    url: jdbc:postgresql://localhost:5432/coins
+    user: postgres
+    password: postgres
+  r2dbc:
+    url: "r2dbc:postgresql://localhost:5432/coins"
+    username: postgres
+    password: postgres
+server:
+  port: 8080
+app:
+  ws:
+    coingecko:
+      scheme: "https"
+      url: "api.coingecko.com"
+      token: "CG-xMFsRRp2YAgww7NZrh5xshaU"
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.liquibase: DEBUG
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://localhost:5432/coins
+    username: postgres
+    password: postgres
+server:
+  port: 3080
+
+
