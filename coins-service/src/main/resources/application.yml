@@ -4,21 +4,26 @@ spring:
   liquibase:
     enabled: true
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
-    url: jdbc:postgresql://localhost:5432/coins
+    url: jdbc:postgresql://localhost:5432/dev-db
     user: postgres
     password: postgres
+    drop-first: false
   r2dbc:
-    url: "r2dbc:postgresql://localhost:5432/coins"
+    url: "r2dbc:postgresql://localhost:5432/dev-db"
     username: postgres
     password: postgres
+
 server:
   port: 8080
+
 app:
   ws:
     coingecko:
       scheme: "https"
       url: "api.coingecko.com"
-      token: "CG-xMFsRRp2YAgww7NZrh5xshaU"
+      token: mytoken
+  scheduled-tasks:
+    coingecko-fixed-rate: 60000
 
 logging:
   level:
@@ -26,16 +31,39 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.liquibase: DEBUG
+    org.springframework.data.r2dbc: DEBUG
+    org.postgresql: DEBUG
+    liquibase: DEBUG
+    org.springframework.scheduling: DEBUG
+    org.springframework.scheduler: DEBUG
 ---
 spring:
   config:
     activate:
       on-profile: docker
   datasource:
-    url: jdbc:postgresql://localhost:5432/coins
+    url: jdbc:postgresql://localhost:5432/db
     username: postgres
     password: postgres
+
+  liquibase:
+    drop-first: true
 server:
   port: 3080
 
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  liquibase:
+    enabled: true
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+    drop-first: true
+  r2dbc:
+    url: r2dbc:tc:postgresql:///testdb?TC_IMAGE_TAG=14-alpine
+
+app:
+  scheduled-tasks:
+    coingecko-fixed-rate: 10000
 

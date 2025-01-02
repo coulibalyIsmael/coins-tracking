@@ -7,30 +7,48 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
-@Component 
+@Component
 @RequiredArgsConstructor
 public class CoinGeckoClient {
-    private  final WebClient webClient;
-    @Value("${app.ws.coingecko.token}")
-     private String token = "";
-    @Value("${app.ws.coingecko.url}")
-    private String host ;
+  private final WebClient webClient;
 
-   public Flux<CoinGeckoMarket> getCoinsList(String vsCurrency){
+  @Value("${app.ws.coingecko.token}")
+  private String token;
+
+  @Value("${app.ws.coingecko.url}")
+  private String host;
+
+  public Flux<CoinGeckoMarket> getCoinsMarketData(String vsCurrency) {
     return webClient
         .get()
-            .uri(uriBuilder -> uriBuilder
-                .scheme("https")
-                .host(host)
-                .path("/api/v3/coins/markets")
-                .queryParam("vs_currency", vsCurrency)
-
-                .build())
+        .uri(
+            uriBuilder ->
+                uriBuilder
+                    .scheme("https")
+                    .host(host)
+                    .path("/api/v3/coins/markets")
+                    .queryParam("vs_currency", vsCurrency)
+                    .build())
         .header("x-cg-pro-api-key", token)
         .retrieve()
-
         .bodyToFlux(CoinGeckoMarket.class)
-        .subscribeOn(Schedulers.boundedElastic())
-            ;
-    };
+        .subscribeOn(Schedulers.boundedElastic());
+  }
+
+  public Flux<CoinGecko> getCoinsList() {
+    return webClient
+        .get()
+        .uri(
+            uriBuilder ->
+                uriBuilder
+                    .scheme("https")
+                    .host(host)
+                    .path("/api/v3/coins/list")
+                    .queryParam("status", "active")
+                    .build())
+        .header("x-cg-pro-api-key", token)
+        .retrieve()
+        .bodyToFlux(CoinGecko.class)
+        .subscribeOn(Schedulers.boundedElastic());
+  }
 }

@@ -3,15 +3,26 @@ package com.coolismo.coins_service.infrastructure.model;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("coins")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class CoinEntity {
 
-  @Id private String id;
+  @Id private BigInteger id;
+
+  private LocalDateTime inserted_at;
+
+  private String coin_id;
+
   private String symbol;
   private String name;
   private BigDecimal current_price;

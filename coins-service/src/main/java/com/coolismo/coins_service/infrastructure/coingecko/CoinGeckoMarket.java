@@ -28,6 +28,7 @@ public class CoinGeckoMarket implements Serializable {
   private BigDecimal low_24h;
   private BigDecimal price_change_24h;
   private BigDecimal price_change_percentage_24h;
+  private BigDecimal price_change_percentage_1h;
   private BigInteger market_cap_change_24h;
   private BigDecimal market_cap_change_percentage_24h;
   private BigInteger circulating_supply;
@@ -42,6 +43,5 @@ public class CoinGeckoMarket implements Serializable {
   private String image;
   private Integer market_cap_rank;
   private BigDecimal fully_diluted_valuation;
-  private BigDecimal roi;
   private BigInteger max_supply;
 }
